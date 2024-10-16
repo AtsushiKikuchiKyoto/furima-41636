@@ -5,7 +5,7 @@
 | --- | --- | --- |
 | nickname | string | null: false |
 | email | string | null: false, unique: true |
-| password | string | null: false |
+| encrypted_password | string | null: false |
 | last_name | string | null: false |
 | first_name | string | null: false |
 | last_name_kana | string | null: false |
@@ -20,20 +20,15 @@
 ## テーブル名 items
 | Column  | Type  | Options |
 | --- | --- | --- |
-| image | text | null: false |
 | name | string | null: false |
 | content | text | null: false |
-| category_id | integer | null: false, foreign_key: true |
-| condition_id | integer | null: false, foreign_key: true |
-| postage_id | integer | null: false, foreign_key: true |
-| ship_area | string | null: false |
-| prefecture_id | integer | null: false, foreign_key: true |
-| lead_time | integer | null: false, foreign_key: true |
+| category_id | integer | null: false |
+| condition_id | integer | null: false |
+| postage_id | integer | null: false |
+| prefecture_id | integer | null: false |
+| lead_time_id | integer | null: false |
 | price | integer | null: false |
-| service_fee | integer | null: false |
-| sales_profit | integer | null: false |
-| sold_out | boor | null: false |
-| user_id | integer | null: false, foreign_key: true |
+| user | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
@@ -43,8 +38,8 @@
 ## テーブル名 orders
 | Column  | Type  | Options |
 | --- | --- | --- |
-| user_id | integer | null: false, foreign_key: true |
-| item_id | integer | null: false, foreign_key: true |
+| user | references | null: false, foreign_key: true |
+| item | references | null: false, foreign_key: true |
 
 
 ### Association
@@ -55,9 +50,13 @@
 ## テーブル名 deliveries
 | Column  | Type  | Options |
 | --- | --- | --- |
-| order_id | integer | null: false, foreign_key: true |
+| order | references | null: false, foreign_key: true |
 | post_code | string | null: false |
-| prefecture_id | integer | null: false, foreign_key: true |
+| prefecture_id | integer | null: false |
 | city | string | null: false |
 | street_address | string | null: false |
 | building | string |  |
+| tel | string | null: false |
+
+### Association
+- belongs_to :order
