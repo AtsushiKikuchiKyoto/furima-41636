@@ -103,6 +103,11 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include 'Last name kana 全角カナ文字を使用してください'
     end
+    it 'メイは全角入力(カタカナ)でなければユーザー登録ができない' do
+      @user.first_name_kana = 'たろう'
+      @user.valid?
+      expect(@user.errors.full_messages).to include 'First name kana 全角カナ文字を使用してください'
+    end
     it '生年月日が空ではユーザー登録ができない' do
       @user.birthday = ''
       @user.valid?
