@@ -6,6 +6,7 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :lead_time
 
+  validates :image, presence: true
   validates :name, presence: true
   validates :content, presence: true
   validates :category_id, numericality: { other_than: 1 , message: "can't be blank"}
@@ -14,8 +15,8 @@ class Item < ApplicationRecord
   validates :prefecture_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :lead_time_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :price, presence: true
+  
   has_one_attached :image
-
   belongs_to :user
 
 
