@@ -14,7 +14,7 @@ class Item < ApplicationRecord
   validates :postage_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :prefecture_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :lead_time_id, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :price, presence: true
+  validates :price, numericality: { in: 300..9999999, only_integer: true }
   
   has_one_attached :image
   belongs_to :user
