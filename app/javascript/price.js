@@ -1,4 +1,4 @@
-function post (){
+function price (){
   const priceForm = document.getElementById("item-price");
   const taxForm = document.getElementById("add-tax-price");
   const profitForm = document.getElementById("profit");
@@ -11,4 +11,5 @@ function post (){
     profitForm.innerHTML = profit;
   });
 };
- window.addEventListener('turbo:load', post);
+ window.addEventListener('turbo:load', price);
+ window.addEventListener("turbo:render", price);
