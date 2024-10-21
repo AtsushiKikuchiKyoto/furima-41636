@@ -2,9 +2,11 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
 
   def index
-    @item = Item.find(params[:item_id])
-    if Order.find_by(item_id: @item.id).nil? && current_user.id != @item.user_id
-      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+    set_params_and_key 
+    sold_out = Order.find_by(item_id: @item.id).present?
+    item_owner = current_user.id == @item.user_id
+  
+    unless sold_out || item_owner
       @order_delivery = OrderDelivery.new
     else
       redirect_to root_path
@@ -18,8 +20,7 @@ class OrdersController < ApplicationController
       @order_delivery.save
       redirect_to root_path
     else
-      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-      @item = Item.find(params[:item_id])
+      set_params_and_key
       render :index, status: :unprocessable_entity
     end
   end
@@ -41,4 +42,10 @@ class OrdersController < ApplicationController
       currency: 'jpy'
     )
   end
+
+  def set_params_and_key
+    @item = Item.find(params[:item_id])
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+  end
+
 end
