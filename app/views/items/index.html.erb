@@ -135,9 +135,9 @@
             <%= image_tag item.image, class: "item-img" %>
 
             <% if Order.find_by(item_id: item.id).present? %>
-            <div class='sold-out'>
-              <span>Sold Out!!</span>
-            </div>
+              <div class='sold-out'>
+                <span>Sold Out!!</span>
+              </div>
             <% end %>
 
           </div>
