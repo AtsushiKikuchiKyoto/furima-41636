@@ -6,7 +6,7 @@ RSpec.describe OrderDelivery, type: :model do
   end
   describe '購入機能の確認' do
     context '購入情報が正しい場合' do
-      it 'すべて正しい情報が入力された場合' do
+      it 'すべて正しい情報が入力された場合(token含む)' do
         expect(@order_delivery).to be_valid
       end
       it '建物名が空白でも購入できる' do
@@ -64,6 +64,11 @@ RSpec.describe OrderDelivery, type: :model do
         @order_delivery.tel = "５５５５５５５５５５"
         @order_delivery.valid?
         expect(@order_delivery.errors.full_messages).to include("Tel is invalid. Enter 10 or 11 numbers without hyphen(-)")
+      end
+      it 'トークンが空では登録できない' do
+        @order_delivery.token = ""
+        @order_delivery.valid?
+        expect(@order_delivery.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
