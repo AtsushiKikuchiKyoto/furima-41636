@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderDelivery, type: :model do
   before do
-    @order_delivery = FactoryBot.build(:order_delivery, user_id: 1, item_id: 1)
+    @item = FactoryBot.create(:item)
+    @user = FactoryBot.create(:user)
+    @order_delivery = FactoryBot.build(:order_delivery, user_id: @user.id, item_id: @item.id)
   end
   describe '購入機能の確認' do
     context '購入情報が正しい場合' do
