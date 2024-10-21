@@ -8,11 +8,13 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
-      <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <%# <div class="sold-out">
+
+      <% if Order.find_by(item_id: @item.id).present? %>
+      <div class="sold-out">
         <span>Sold Out!!</span>
-      </div> %>
-      <%# //商品が売れている場合は、sold outを表示しましょう %>
+      </div>
+      <% end %>
+
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -23,6 +25,7 @@
       </span>
     </div>
 
+    <% unless Order.find_by(item_id: @item.id).present? %>
     <% if user_signed_in? %>
       <% if @item.user_id == current_user.id%>
         <%= link_to "商品の編集", edit_item_path(@item.id), method: :get, class: "item-red-btn" %>
@@ -31,6 +34,7 @@
       <% else %>
         <%= link_to "購入画面に進む", item_orders_path(@item.id), data: { turbo: false }, class:"item-red-btn"%>
       <% end %>
+    <% end %>
     <% end %>
 
     <div class="item-explain-box">
