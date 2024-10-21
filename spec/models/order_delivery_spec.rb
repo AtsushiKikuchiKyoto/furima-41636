@@ -57,8 +57,13 @@ RSpec.describe OrderDelivery, type: :model do
         @order_delivery.valid?
         expect(@order_delivery.errors.full_messages).to include('Tel is invalid. Enter 10 or 11 numbers without hyphen(-)')
       end
-      it '電話番号の桁数が10~11でない' do
-        @order_delivery.tel = '0751111'
+      it '電話番号の桁数が10未満の場合' do
+        @order_delivery.tel = '123456789'
+        @order_delivery.valid?
+        expect(@order_delivery.errors.full_messages).to include('Tel is invalid. Enter 10 or 11 numbers without hyphen(-)')
+      end
+      it '電話番号の桁数が11より大きい場合' do
+        @order_delivery.tel = '123456789012'
         @order_delivery.valid?
         expect(@order_delivery.errors.full_messages).to include('Tel is invalid. Enter 10 or 11 numbers without hyphen(-)')
       end
@@ -71,6 +76,16 @@ RSpec.describe OrderDelivery, type: :model do
         @order_delivery.token = ''
         @order_delivery.valid?
         expect(@order_delivery.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'user_idがからでは購入できない' do
+        @order_delivery.user_id = ''
+        @order_delivery.valid?
+        expect(@order_delivery.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idがからでは購入できない' do
+        @order_delivery.item_id = ''
+        @order_delivery.valid?
+        expect(@order_delivery.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
